@@ -1,0 +1,969 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{AdvancedLane}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{advanced-lane-finding-project}{%
+\subsection{Advanced Lane Finding
+Project}\label{advanced-lane-finding-project}}
+
+The goals / steps of this project are the following:
+
+\begin{itemize}
+\tightlist
+\item
+  Compute the camera calibration matrix and distortion coefficients
+  given a set of chessboard images.
+\item
+  Apply a distortion correction to raw images.
+\item
+  Use color transforms, gradients, etc., to create a thresholded binary
+  image.
+\item
+  Apply a perspective transform to rectify binary image (``birds-eye
+  view'').
+\item
+  Detect lane pixels and fit to find the lane boundary.
+\item
+  Determine the curvature of the lane and vehicle position with respect
+  to center.
+\item
+  Warp the detected lane boundaries back onto the original image.
+\item
+  Output visual display of the lane boundaries and numerical estimation
+  of lane curvature and vehicle position.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{camera-calibration-using-the-chessboard-images}{%
+\subsection{Camera calibration using the Chessboard
+images}\label{camera-calibration-using-the-chessboard-images}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Importing libraries}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{cv2}
+        \PY{k+kn}{import} \PY{n+nn}{os}
+        \PY{k+kn}{import} \PY{n+nn}{glob}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{image} \PY{k}{as} \PY{n+nn}{mpimg}
+        \PY{c+c1}{\PYZsh{}\PYZpc{}matplotlib qt}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{} 1. CALIBRATING camera}
+         \PY{c+c1}{\PYZsh{} prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)}
+         \PY{n}{objp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{6}\PY{o}{*}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{)}
+         \PY{n}{objp}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mgrid}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{6}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Arrays to store object points and image points from all the images.}
+         \PY{n}{objpoints} \PY{o}{=} \PY{p}{[}\PY{p}{]} \PY{c+c1}{\PYZsh{} 3d points in real world space}
+         \PY{n}{imgpoints} \PY{o}{=} \PY{p}{[}\PY{p}{]} \PY{c+c1}{\PYZsh{} 2d points in image plane.}
+         
+         \PY{c+c1}{\PYZsh{} Make a list of calibration images}
+         \PY{n}{images} \PY{o}{=} \PY{n}{glob}\PY{o}{.}\PY{n}{glob}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{camera\PYZus{}cal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{calibration*.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Step through the list and search for chessboard corners}
+         \PY{k}{for} \PY{n}{fname} \PY{o+ow}{in} \PY{n}{images}\PY{p}{:}
+             \PY{n}{img} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{n}{fname}\PY{p}{)}
+             \PY{n}{gray} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{img}\PY{p}{,}\PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2GRAY}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(gray)}
+             \PY{c+c1}{\PYZsh{}plt.imshow(img)}
+             \PY{c+c1}{\PYZsh{}plt.show()}
+             \PY{c+c1}{\PYZsh{} Find the chessboard corners}
+             \PY{n}{ret}\PY{p}{,} \PY{n}{corners} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{findChessboardCorners}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{,}\PY{k+kc}{None}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{} If found, add object points, image points}
+             \PY{k}{if} \PY{n}{ret} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                 \PY{n}{objpoints}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{objp}\PY{p}{)}
+                 \PY{n}{imgpoints}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{corners}\PY{p}{)}
+         
+                 \PY{c+c1}{\PYZsh{} Draw and display the corners}
+                 \PY{n}{img} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{drawChessboardCorners}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{,} \PY{n}{corners}\PY{p}{,} \PY{n}{ret}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}cv2.imshow(\PYZsq{}img\PYZsq{},img)}
+                 \PY{c+c1}{\PYZsh{}cv2.waitKey(500)}
+         
+         \PY{c+c1}{\PYZsh{} Calibrating camera and collecting distortion parameters}
+         \PY{n}{ret}\PY{p}{,} \PY{n}{mtx}\PY{p}{,} \PY{n}{dist}\PY{p}{,} \PY{n}{rvecs}\PY{p}{,} \PY{n}{tvecs} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{calibrateCamera}\PY{p}{(}\PY{n}{objpoints}\PY{p}{,} \PY{n}{imgpoints}\PY{p}{,} \PY{n}{gray}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{k+kc}{None}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+         \PY{n}{cv2}\PY{o}{.}\PY{n}{destroyAllWindows}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{c+c1}{\PYZsh{} 2. UNDISTORTING test image}
+         \PY{n}{img} \PY{o}{=} \PY{n}{mpimg}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}images/test1.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img}\PY{p}{)}
+         \PY{n}{dst} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{undistort}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{mtx}\PY{p}{,} \PY{n}{dist}\PY{p}{,} \PY{k+kc}{None}\PY{p}{,} \PY{n}{mtx}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Converting the image to RGB and saving the undistorted image}
+         \PY{n}{dst\PYZus{}rgb} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{dst}\PY{p}{,}\PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2RGB}\PY{p}{)}
+         \PY{n}{cv2}\PY{o}{.}\PY{n}{imwrite}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}images/test\PYZus{}dst.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{dst\PYZus{}rgb}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}cv2.imwrite(\PYZsq{}output\PYZus{}images/test\PYZus{}img.jpg\PYZsq{},img)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} True
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} 3. GRADIENT and COLOR transform}
+        \PY{c+c1}{\PYZsh{} Re\PYZhy{}using the functions created for lesson 6. Combining Thresholds}
+        \PY{c+c1}{\PYZsh{} Three Sobel transforms combined for the most reliable outline identification}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{c+c1}{\PYZsh{} Reading back the undistorted test image for testing Sobel transform functions}
+         \PY{n}{image} \PY{o}{=} \PY{n}{mpimg}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}images/test\PYZus{}dst.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}printing out some stats and plotting}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{This image is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{type}\PY{p}{(}\PY{n}{image}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{with dimensions:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{image}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{image}\PY{p}{)}  \PY{c+c1}{\PYZsh{} if you wanted to show a single color channel image called \PYZsq{}gray\PYZsq{}, for example, call as plt.imshow(gray, cmap=\PYZsq{}gray\PYZsq{})}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+This image is: <class 'numpy.ndarray'> with dimensions: (720, 1280, 3)
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:} <matplotlib.image.AxesImage at 0x1a818393ba8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{c+c1}{\PYZsh{} ABSOLUTE SOBEL}
+         \PY{c+c1}{\PYZsh{} Output is generated for a given kernel and orientation, along with arbitrary thresholds that will be tuned}
+         \PY{k}{def} \PY{n+nf}{abs\PYZus{}sobel\PYZus{}thresh}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{orient}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} Convert to grayscale}
+             \PY{n}{gray} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}RGB2GRAY}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Apply x or y gradient with the OpenCV Sobel() function}
+             \PY{c+c1}{\PYZsh{} and take the absolute value}
+             \PY{k}{if} \PY{n}{orient} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{abs\PYZus{}sobel} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{cv2}\PY{o}{.}\PY{n}{Sobel}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{CV\PYZus{}64F}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{ksize}\PY{o}{=}\PY{n}{sobel\PYZus{}kernel}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{orient} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{abs\PYZus{}sobel} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{cv2}\PY{o}{.}\PY{n}{Sobel}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{CV\PYZus{}64F}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{ksize}\PY{o}{=}\PY{n}{sobel\PYZus{}kernel}\PY{p}{)}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Rescale back to 8 bit integer}
+             \PY{n}{scaled\PYZus{}sobel} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{uint8}\PY{p}{(}\PY{l+m+mi}{255}\PY{o}{*}\PY{n}{abs\PYZus{}sobel}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{abs\PYZus{}sobel}\PY{p}{)}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Create a copy and apply the threshold}
+             \PY{n}{binary\PYZus{}output} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{scaled\PYZus{}sobel}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Here I\PYZsq{}m using inclusive (\PYZgt{}=, \PYZlt{}=) thresholds, but exclusive is ok too}
+             \PY{n}{binary\PYZus{}output}\PY{p}{[}\PY{p}{(}\PY{n}{scaled\PYZus{}sobel} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{thresh}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{scaled\PYZus{}sobel} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{thresh}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+         
+             \PY{c+c1}{\PYZsh{} Return the result}
+             \PY{k}{return} \PY{n}{binary\PYZus{}output}
+         
+         
+         \PY{c+c1}{\PYZsh{} Run the function}
+         \PY{n}{grad\PYZus{}binary} \PY{o}{=} \PY{n}{abs\PYZus{}sobel\PYZus{}thresh}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{orient}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{200}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Plot the result}
+         \PY{n}{f}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{24}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)}\PY{p}{)}
+         \PY{n}{f}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{image}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Original Image}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{grad\PYZus{}binary}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Thresholded Gradient}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{left}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{,} \PY{n}{right}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{top}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} \PY{n}{bottom}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} \PY{c+c1}{\PYZsh{} DIRECTION SOBEL}
+         \PY{c+c1}{\PYZsh{} Producing the outline based on the kernel and the angular direction}
+         \PY{k}{def} \PY{n+nf}{dir\PYZus{}threshold}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} Grayscale}
+             \PY{n}{gray} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}RGB2GRAY}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Calculate the x and y gradients}
+             \PY{n}{sobelx} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{Sobel}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{CV\PYZus{}64F}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{ksize}\PY{o}{=}\PY{n}{sobel\PYZus{}kernel}\PY{p}{)}
+             \PY{n}{sobely} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{Sobel}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{CV\PYZus{}64F}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{ksize}\PY{o}{=}\PY{n}{sobel\PYZus{}kernel}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Take the absolute value of the gradient direction, }
+             \PY{c+c1}{\PYZsh{} apply a threshold, and create a binary image result}
+             \PY{n}{absgraddir} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arctan2}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{sobely}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{sobelx}\PY{p}{)}\PY{p}{)}
+             \PY{n}{binary\PYZus{}output} \PY{o}{=}  \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{absgraddir}\PY{p}{)}
+             \PY{n}{binary\PYZus{}output}\PY{p}{[}\PY{p}{(}\PY{n}{absgraddir} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{thresh}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{absgraddir} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{thresh}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+         
+             \PY{c+c1}{\PYZsh{} Return the binary image}
+             \PY{k}{return} \PY{n}{binary\PYZus{}output}
+         
+         \PY{n}{dir\PYZus{}binary} \PY{o}{=} \PY{n}{dir\PYZus{}threshold}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Plot the result}
+         \PY{n}{f}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{24}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)}\PY{p}{)}
+         \PY{n}{f}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{image}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Original Image}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{dir\PYZus{}binary}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Thresholded Grad. Dir.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{left}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{,} \PY{n}{right}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{top}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} \PY{n}{bottom}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{c+c1}{\PYZsh{} MAGNITUDE SOBEL}
+         \PY{k}{def} \PY{n+nf}{mag\PYZus{}thresh}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{mag\PYZus{}thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} Convert to grayscale}
+             \PY{n}{gray} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}RGB2GRAY}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}plt.imshow(image)}
+             
+             \PY{c+c1}{\PYZsh{} Take both Sobel x and y gradients}
+             \PY{n}{sobelx} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{Sobel}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{CV\PYZus{}64F}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{ksize}\PY{o}{=}\PY{n}{sobel\PYZus{}kernel}\PY{p}{)}
+             \PY{n}{sobely} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{Sobel}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{CV\PYZus{}64F}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{ksize}\PY{o}{=}\PY{n}{sobel\PYZus{}kernel}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Calculate the gradient magnitude}
+             \PY{n}{gradmag} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{sobelx}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{sobely}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Rescale to 8 bit}
+             \PY{n}{scale\PYZus{}factor} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{gradmag}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{255} 
+             \PY{n}{gradmag} \PY{o}{=} \PY{p}{(}\PY{n}{gradmag}\PY{o}{/}\PY{n}{scale\PYZus{}factor}\PY{p}{)}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{uint8}\PY{p}{)} 
+             \PY{c+c1}{\PYZsh{} Create a binary image of ones where threshold is met, zeros otherwise}
+             \PY{n}{binary\PYZus{}output} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{gradmag}\PY{p}{)}
+             \PY{n}{binary\PYZus{}output}\PY{p}{[}\PY{p}{(}\PY{n}{gradmag} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{mag\PYZus{}thresh}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{gradmag} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{mag\PYZus{}thresh}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+         
+             \PY{c+c1}{\PYZsh{} Return the binary image}
+             \PY{k}{return} \PY{n}{binary\PYZus{}output}
+         
+         \PY{n}{mag\PYZus{}binary} \PY{o}{=} \PY{n}{mag\PYZus{}thresh}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{mag\PYZus{}thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Plot the result}
+         \PY{n}{f}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{24}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)}\PY{p}{)}
+         \PY{n}{f}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{image}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Original Image}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{mag\PYZus{}binary}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Thresholded Magnitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{left}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{,} \PY{n}{right}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{top}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} \PY{n}{bottom}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}60}]:} \PY{c+c1}{\PYZsh{} COLOR Thresholding}
+         \PY{c+c1}{\PYZsh{} Re\PYZhy{}using the function created in lesson 11 HLS Quiz}
+         \PY{c+c1}{\PYZsh{} Focus on the Saturation channel of the HLS}
+         \PY{k}{def} \PY{n+nf}{hls\PYZus{}select}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n}{hls} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}RGB2HLS}\PY{p}{)}
+             \PY{n}{s\PYZus{}channel} \PY{o}{=} \PY{n}{hls}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+             \PY{n}{binary\PYZus{}output} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{s\PYZus{}channel}\PY{p}{)}
+             \PY{n}{binary\PYZus{}output}\PY{p}{[}\PY{p}{(}\PY{n}{s\PYZus{}channel} \PY{o}{\PYZgt{}} \PY{n}{thresh}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{s\PYZus{}channel} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{thresh}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+             \PY{k}{return} \PY{n}{binary\PYZus{}output}
+         
+         \PY{n}{hls\PYZus{}binary} \PY{o}{=} \PY{n}{hls\PYZus{}select}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{90}\PY{p}{,} \PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{hls\PYZus{}binary}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:} \PY{c+c1}{\PYZsh{} COMBINATION of Sobel transforms and the COLOR thresholding}
+         \PY{n}{ksize} \PY{o}{=} \PY{l+m+mi}{3}
+         \PY{n}{gradx} \PY{o}{=} \PY{n}{abs\PYZus{}sobel\PYZus{}thresh}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{orient}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{n}{ksize}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+         \PY{n}{grady} \PY{o}{=} \PY{n}{abs\PYZus{}sobel\PYZus{}thresh}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{orient}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{n}{ksize}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+         \PY{n}{mag\PYZus{}binary} \PY{o}{=} \PY{n}{mag\PYZus{}thresh}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{n}{ksize}\PY{p}{,} \PY{n}{mag\PYZus{}thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+         \PY{n}{dir\PYZus{}binary} \PY{o}{=} \PY{n}{dir\PYZus{}threshold}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{n}{ksize}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} COLOR Thresholding}
+         \PY{n}{hls\PYZus{}binary} \PY{o}{=} \PY{n}{hls\PYZus{}select}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{90}\PY{p}{,} \PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Original thresholds}
+         \PY{c+c1}{\PYZsh{}(20, 100)}
+         \PY{c+c1}{\PYZsh{}(30, 100)}
+         \PY{c+c1}{\PYZsh{}(0.7, 1.3)}
+         \PY{n}{combined} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{dir\PYZus{}binary}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}combined[ ((gradx == 1) \PYZam{} (grady == 1)) | ((mag\PYZus{}binary == 1) \PYZam{} (dir\PYZus{}binary == 1))  | hls\PYZus{}binary == 1 ] = 1}
+         
+         \PY{n}{combined}\PY{p}{[}  \PY{p}{(}\PY{p}{(}\PY{n}{dir\PYZus{}binary} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{\PYZam{}}\PY{p}{(}\PY{n}{mag\PYZus{}binary} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{)} \PY{p}{)}  \PY{o}{|} \PY{n}{hls\PYZus{}binary} \PY{o}{==} \PY{l+m+mi}{1} \PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+         
+         
+         \PY{n}{f}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{24}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)}\PY{p}{)}
+         \PY{n}{f}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{image}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Original Image}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{combined}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Combined Thresholds}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{left}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{,} \PY{n}{right}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{top}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} \PY{n}{bottom}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}plt.imshow(grady, cmap=\PYZsq{}gray\PYZsq{})}
+         \PY{c+c1}{\PYZsh{}plt.show()}
+         \PY{c+c1}{\PYZsh{}plt.imshow(gradx, cmap=\PYZsq{}gray\PYZsq{})}
+         \PY{c+c1}{\PYZsh{}plt.show()}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Maybe first dirbinary?}
+        
+        \PY{n}{dir\PYZus{}binary} \PY{o}{=} \PY{n}{dir\PYZus{}threshold}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{n}{ksize}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+        \PY{n}{gradx} \PY{o}{=} \PY{n}{abs\PYZus{}sobel\PYZus{}thresh}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{orient}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sobel\PYZus{}kernel}\PY{o}{=}\PY{n}{ksize}\PY{p}{,} \PY{n}{thresh}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} Change to perspective change ONLY!! \PYZhy{} we undistort already in the second step of the project}
+        
+        \PY{c+c1}{\PYZsh{} The function performing undistortion and transformation}
+        \PY{c+c1}{\PYZsh{} The function is mostly reused from lesson 18. Undistort and Transform}
+        \PY{k}{def} \PY{n+nf}{corners\PYZus{}unwarp}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{nx}\PY{p}{,} \PY{n}{ny}\PY{p}{,} \PY{n}{mtx}\PY{p}{,} \PY{n}{dist}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Removing distortion}
+            \PY{n}{undist} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{undistort}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{mtx}\PY{p}{,} \PY{n}{dist}\PY{p}{,} \PY{k+kc}{None}\PY{p}{,} \PY{n}{mtx}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Converting to grayscale}
+            \PY{n}{gray} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{undist}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2GRAY}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Identifying corners (number of corners is predefined in the function call)}
+            \PY{n}{ret}\PY{p}{,} \PY{n}{corners} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{findChessboardCorners}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{p}{(}\PY{n}{nx}\PY{p}{,} \PY{n}{ny}\PY{p}{)}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+        
+            \PY{k}{if} \PY{n}{ret} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                \PY{n}{cv2}\PY{o}{.}\PY{n}{drawChessboardCorners}\PY{p}{(}\PY{n}{undist}\PY{p}{,} \PY{p}{(}\PY{n}{nx}\PY{p}{,} \PY{n}{ny}\PY{p}{)}\PY{p}{,} \PY{n}{corners}\PY{p}{,} \PY{n}{ret}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Arbitrary offset for cropping to preserve the aspect ratio}
+                \PY{n}{offset} \PY{o}{=} \PY{l+m+mi}{100} 
+                \PY{n}{img\PYZus{}size} \PY{o}{=} \PY{p}{(}\PY{n}{gray}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{gray}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} Identifying the fringe corners}
+                \PY{n}{src} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{(}\PY{p}{[}\PY{n}{corners}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{corners}\PY{p}{[}\PY{n}{nx}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{corners}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{corners}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{n}{nx}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Arbitrary four points based on offset crop}
+                \PY{n}{dst} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{offset}\PY{p}{,} \PY{n}{offset}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{offset}\PY{p}{,} \PY{n}{offset}\PY{p}{]}\PY{p}{,} 
+                                             \PY{p}{[}\PY{n}{img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{offset}\PY{p}{,} \PY{n}{img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{offset}\PY{p}{]}\PY{p}{,} 
+                                             \PY{p}{[}\PY{n}{offset}\PY{p}{,} \PY{n}{img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{offset}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Extracting perspective transform matrix}
+                \PY{n}{M} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{getPerspectiveTransform}\PY{p}{(}\PY{n}{src}\PY{p}{,} \PY{n}{dst}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Warping the image}
+                \PY{n}{warped} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{warpPerspective}\PY{p}{(}\PY{n}{undist}\PY{p}{,} \PY{n}{M}\PY{p}{,} \PY{n}{img\PYZus{}size}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} Return the resulting image and matrix}
+            \PY{k}{return} \PY{n}{warped}\PY{p}{,} \PY{n}{M}
+        
+        \PY{c+c1}{\PYZsh{} Testing the function on the sample image}
+        \PY{n}{nx} \PY{o}{=} \PY{l+m+mi}{9}
+        \PY{n}{ny} \PY{o}{=} \PY{l+m+mi}{6}
+        \PY{n}{img} \PY{o}{=} \PY{n}{mpimg}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}images/test1.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{corners\PYZus{}unwarp}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{nx}\PY{p}{,} \PY{n}{ny}\PY{p}{,} \PY{n}{mtx}\PY{p}{,} \PY{n}{dist}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        UnboundLocalError                         Traceback (most recent call last)
+
+        <ipython-input-6-c143702abac3> in <module>
+         35 ny = 6
+         36 img = mpimg.imread('test\_images/test1.jpg')
+    ---> 37 print(corners\_unwarp(img, nx, ny, mtx, dist))
+    
+
+        <ipython-input-6-c143702abac3> in corners\_unwarp(img, nx, ny, mtx, dist)
+         29 
+         30     \# Return the resulting image and matrix
+    ---> 31     return warped, M
+         32 
+         33 \# Testing the function on the sample image
+    
+
+        UnboundLocalError: local variable 'warped' referenced before assignment
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:}     \PY{n}{nx} \PY{o}{=} \PY{l+m+mi}{9}
+             \PY{n}{ny} \PY{o}{=} \PY{l+m+mi}{6}
+             \PY{n}{img} \PY{o}{=} \PY{n}{mpimg}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}images/test1.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         
+             \PY{n}{undist} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{undistort}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{mtx}\PY{p}{,} \PY{n}{dist}\PY{p}{,} \PY{k+kc}{None}\PY{p}{,} \PY{n}{mtx}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Converting to grayscale}
+             \PY{n}{gray} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{undist}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2GRAY}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Identifying corners (number of corners is predefined in the function call)}
+             \PY{n}{ret}\PY{p}{,} \PY{n}{corners} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{findChessboardCorners}\PY{p}{(}\PY{n}{gray}\PY{p}{,} \PY{p}{(}\PY{n}{nx}\PY{p}{,} \PY{n}{ny}\PY{p}{)}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+         
+             \PY{k}{if} \PY{n}{ret} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                 \PY{n}{cv2}\PY{o}{.}\PY{n}{drawChessboardCorners}\PY{p}{(}\PY{n}{undist}\PY{p}{,} \PY{p}{(}\PY{n}{nx}\PY{p}{,} \PY{n}{ny}\PY{p}{)}\PY{p}{,} \PY{n}{corners}\PY{p}{,} \PY{n}{ret}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Arbitrary offset for cropping to preserve the aspect ratio}
+                 \PY{n}{offset} \PY{o}{=} \PY{l+m+mi}{100} 
+                 \PY{n}{img\PYZus{}size} \PY{o}{=} \PY{p}{(}\PY{n}{gray}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{gray}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         
+                 \PY{c+c1}{\PYZsh{} Identifying the fringe corners}
+                 \PY{n}{src} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{(}\PY{p}{[}\PY{n}{corners}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{corners}\PY{p}{[}\PY{n}{nx}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{corners}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{corners}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{n}{nx}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Arbitrary four points based on offset crop}
+                 \PY{n}{dst} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{offset}\PY{p}{,} \PY{n}{offset}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{offset}\PY{p}{,} \PY{n}{offset}\PY{p}{]}\PY{p}{,} 
+                                              \PY{p}{[}\PY{n}{img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{offset}\PY{p}{,} \PY{n}{img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{offset}\PY{p}{]}\PY{p}{,} 
+                                              \PY{p}{[}\PY{n}{offset}\PY{p}{,} \PY{n}{img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{offset}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Extracting perspective transform matrix}
+                 \PY{n}{M} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{getPerspectiveTransform}\PY{p}{(}\PY{n}{src}\PY{p}{,} \PY{n}{dst}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Warping the image}
+                 \PY{n}{warped} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{warpPerspective}\PY{p}{(}\PY{n}{undist}\PY{p}{,} \PY{n}{M}\PY{p}{,} \PY{n}{img\PYZus{}size}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{ret}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{warped}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+False
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        NameError                                 Traceback (most recent call last)
+
+        <ipython-input-11-de473282a2b5> in <module>
+         27     warped = cv2.warpPerspective(undist, M, img\_size)
+         28 print(ret)
+    ---> 29 print(warped)
+    
+
+        NameError: name 'warped' is not defined
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{c+c1}{\PYZsh{} Testing calibration on the sample image}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{ret}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{mtx}\PY{p}{)}
+         \PY{n}{img} \PY{o}{=} \PY{n}{mpimg}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}images/test1.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{if} \PY{n}{ret} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+             \PY{n}{dst} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{undistort}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{mtx}\PY{p}{,} \PY{n}{dist}\PY{p}{,} \PY{k+kc}{None}\PY{p}{,} \PY{n}{mtx}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1.029815337105897
+[[  1.15777930e+03   0.00000000e+00   6.67111054e+02]
+ [  0.00000000e+00   1.15282291e+03   3.86128937e+02]
+ [  0.00000000e+00   0.00000000e+00   1.00000000e+00]]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        TypeError                                 Traceback (most recent call last)
+
+        <ipython-input-32-12b803556e20> in <module>
+          6 if ret == True:
+          7     dst = cv2.undistort(img, mtx, dist, None, mtx)
+    ----> 8 plt.imshow(img)
+          9 plt.show()
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}pyplot.py in imshow(X, cmap, norm, aspect, interpolation, alpha, vmin, vmax, origin, extent, shape, filternorm, filterrad, imlim, resample, url, hold, data, **kwargs)
+       3140            filternorm=1, filterrad=4.0, imlim=None, resample=None, url=None,
+       3141            hold=None, data=None, **kwargs):
+    -> 3142     ax = gca()
+       3143     \# Deprecated: allow callers to override the hold state
+       3144     \# by passing hold=True|False
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}pyplot.py in gca(**kwargs)
+        948     matplotlib.figure.Figure.gca : The figure's gca method.
+        949     """
+    --> 950     return gcf().gca(**kwargs)
+        951 
+        952 \# More ways of creating axes:
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}pyplot.py in gcf()
+        584         return figManager.canvas.figure
+        585     else:
+    --> 586         return figure()
+        587 
+        588 
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}pyplot.py in figure(num, figsize, dpi, facecolor, edgecolor, frameon, FigureClass, **kwargs)
+        533                                         frameon=frameon,
+        534                                         FigureClass=FigureClass,
+    --> 535                                         **kwargs)
+        536 
+        537         if figLabel:
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5agg.py in new\_figure\_manager(num, *args, **kwargs)
+         42     FigureClass = kwargs.pop('FigureClass', Figure)
+         43     thisFig = FigureClass(*args, **kwargs)
+    ---> 44     return new\_figure\_manager\_given\_figure(num, thisFig)
+         45 
+         46 
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5agg.py in new\_figure\_manager\_given\_figure(num, figure)
+         49     Create a new figure manager instance for the given figure.
+         50     """
+    ---> 51     canvas = FigureCanvasQTAgg(figure)
+         52     return FigureManagerQT(canvas, num)
+         53 
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5agg.py in \_\_init\_\_(self, figure)
+        240         if DEBUG:
+        241             print('FigureCanvasQtAgg: ', figure)
+    --> 242         super(FigureCanvasQTAgg, self).\_\_init\_\_(figure=figure)
+        243         self.\_drawRect = None
+        244         self.blitbox = []
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5agg.py in \_\_init\_\_(self, figure)
+         64 
+         65     def \_\_init\_\_(self, figure):
+    ---> 66         super(FigureCanvasQTAggBase, self).\_\_init\_\_(figure=figure)
+         67         self.\_agg\_draw\_pending = False
+         68 
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5.py in \_\_init\_\_(self, figure)
+        238         \# The need for this change is documented here
+        239         \# http://pyqt.sourceforge.net/Docs/PyQt5/pyqt4\_differences.html\#cooperative-multi-inheritance
+    --> 240         super(FigureCanvasQT, self).\_\_init\_\_(figure=figure)
+        241         self.figure = figure
+        242         self.setMouseTracking(True)
+    
+
+        TypeError: 'figure' is an unknown keyword argument
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{c+c1}{\PYZsh{}cv2.destroyAllWindows()}
+         \PY{c+c1}{\PYZsh{}reading in an image}
+         \PY{n}{image} \PY{o}{=} \PY{n}{mpimg}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}images/test1.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}printing out some stats and plotting}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{This image is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{type}\PY{p}{(}\PY{n}{image}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{with dimensions:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{image}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}
+         \PY{n}{matplotlib}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Qt4Agg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+         
+         \PY{c+c1}{\PYZsh{}plt.figure(figsize=(12,8))}
+         \PY{c+c1}{\PYZsh{}plt.title(\PYZdq{}Score\PYZdq{})}
+         \PY{c+c1}{\PYZsh{}plt.show()}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{image}\PY{p}{)}  \PY{c+c1}{\PYZsh{} if you wanted to show a single color channel image called \PYZsq{}gray\PYZsq{}, for example, call as plt.imshow(gray, cmap=\PYZsq{}gray\PYZsq{})}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+This image is: <class 'numpy.ndarray'> with dimensions: (720, 1280, 3)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        TypeError                                 Traceback (most recent call last)
+
+        <ipython-input-47-aef0059559b6> in <module>
+         13 \#plt.show()
+         14 
+    ---> 15 plt.imshow(image)  \# if you wanted to show a single color channel image called 'gray', for example, call as plt.imshow(gray, cmap='gray')
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}pyplot.py in imshow(X, cmap, norm, aspect, interpolation, alpha, vmin, vmax, origin, extent, shape, filternorm, filterrad, imlim, resample, url, hold, data, **kwargs)
+       3140            filternorm=1, filterrad=4.0, imlim=None, resample=None, url=None,
+       3141            hold=None, data=None, **kwargs):
+    -> 3142     ax = gca()
+       3143     \# Deprecated: allow callers to override the hold state
+       3144     \# by passing hold=True|False
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}pyplot.py in gca(**kwargs)
+        948     matplotlib.figure.Figure.gca : The figure's gca method.
+        949     """
+    --> 950     return gcf().gca(**kwargs)
+        951 
+        952 \# More ways of creating axes:
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}pyplot.py in gcf()
+        584         return figManager.canvas.figure
+        585     else:
+    --> 586         return figure()
+        587 
+        588 
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}pyplot.py in figure(num, figsize, dpi, facecolor, edgecolor, frameon, FigureClass, **kwargs)
+        533                                         frameon=frameon,
+        534                                         FigureClass=FigureClass,
+    --> 535                                         **kwargs)
+        536 
+        537         if figLabel:
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5agg.py in new\_figure\_manager(num, *args, **kwargs)
+         42     FigureClass = kwargs.pop('FigureClass', Figure)
+         43     thisFig = FigureClass(*args, **kwargs)
+    ---> 44     return new\_figure\_manager\_given\_figure(num, thisFig)
+         45 
+         46 
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5agg.py in new\_figure\_manager\_given\_figure(num, figure)
+         49     Create a new figure manager instance for the given figure.
+         50     """
+    ---> 51     canvas = FigureCanvasQTAgg(figure)
+         52     return FigureManagerQT(canvas, num)
+         53 
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5agg.py in \_\_init\_\_(self, figure)
+        240         if DEBUG:
+        241             print('FigureCanvasQtAgg: ', figure)
+    --> 242         super(FigureCanvasQTAgg, self).\_\_init\_\_(figure=figure)
+        243         self.\_drawRect = None
+        244         self.blitbox = []
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5agg.py in \_\_init\_\_(self, figure)
+         64 
+         65     def \_\_init\_\_(self, figure):
+    ---> 66         super(FigureCanvasQTAggBase, self).\_\_init\_\_(figure=figure)
+         67         self.\_agg\_draw\_pending = False
+         68 
+    
+
+        \textasciitilde{}\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Continuum\textbackslash{}miniconda3\textbackslash{}envs\textbackslash{}carnd-term1\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}backends\textbackslash{}backend\_qt5.py in \_\_init\_\_(self, figure)
+        238         \# The need for this change is documented here
+        239         \# http://pyqt.sourceforge.net/Docs/PyQt5/pyqt4\_differences.html\#cooperative-multi-inheritance
+    --> 240         super(FigureCanvasQT, self).\_\_init\_\_(figure=figure)
+        241         self.figure = figure
+        242         self.setMouseTracking(True)
+    
+
+        TypeError: 'figure' is an unknown keyword argument
+
+    \end{Verbatim}
+
+    \hypertarget{and-so-on-and-so-forth}{%
+\subsection{And so on and so
+forth\ldots{}}\label{and-so-on-and-so-forth}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{warper}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{src}\PY{p}{,} \PY{n}{dst}\PY{p}{)}\PY{p}{:}
+        
+            \PY{c+c1}{\PYZsh{} Compute and apply perpective transform}
+            \PY{n}{img\PYZus{}size} \PY{o}{=} \PY{p}{(}\PY{n}{img}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{img}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+            \PY{n}{M} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{getPerspectiveTransform}\PY{p}{(}\PY{n}{src}\PY{p}{,} \PY{n}{dst}\PY{p}{)}
+            \PY{n}{warped} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{warpPerspective}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{M}\PY{p}{,} \PY{n}{img\PYZus{}size}\PY{p}{,} \PY{n}{flags}\PY{o}{=}\PY{n}{cv2}\PY{o}{.}\PY{n}{INTER\PYZus{}NEAREST}\PY{p}{)}  \PY{c+c1}{\PYZsh{} keep same size as input image}
+        
+            \PY{k}{return} \PY{n}{warped}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
